@@ -3,7 +3,7 @@ v1.0
 x	DO LandmarkTypes { id, name('Pokestop', 'Gym', 'Exgym') } - 5 mins
 x	DO Landmarks {id, foreign_key LandmarkType, name, geolong/geolat} - 5 mins
 x	set up Entity Framework - 40 mins
--	copy landmarks-data from html-file to DB seed-file
+x	copy landmarks-data from html-file to DB seed-file - 20 mins
 -	wepAPI controller 'landmarktypes' (GET in: - , out: list_of_types)
 -	webAPI controller 'landmarks' (GET in:geolong/geolat, out:list_of_objects)
 -	rewrite html
@@ -14,5 +14,5 @@ v1.99
 
 -	set up Identity Framework
 	-	add 2 roles and 2 users (1 admin, 1 subordinate editorial user)
--	scaffold editing environment for the user (CRUD for all datatypes
+-	scaffold editing environment for the user (CRUD for all datatypes)
 v2.0
