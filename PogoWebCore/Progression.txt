@@ -1,0 +1,18 @@
+﻿x	cloned old product to continue functionality - 30 mins
+v1.0
+-	DO LandmarkTypes { id, name('Pokestop', 'Gym', 'Exgym') }
+-	DO Landmarks {id, foreign_key LandmarkType, name, geolong/geolat}
+-	wepAPI controller 'landmarktypes' (GET in: - , out: list_of_types)
+-	webAPI controller 'landmarks' (GET in:geolong/geolat, out:list_of_objects)
+-	set up Entity Framework
+-	copy landmarks-data from html-file to DB seed-file
+-	rewrite html
+	-	remove DB content
+	-	add AJAX api-calls
+	-	rewrite JS-code to populate view from api-results
+v1.99
+
+-	set up Identity Framework
+	-	add 2 roles and 2 users (1 admin, 1 subordinate editorial user)
+-	scaffold editing environment for the user (CRUD for all datatypes
+v2.0
