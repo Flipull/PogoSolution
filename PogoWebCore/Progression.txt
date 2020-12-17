@@ -6,10 +6,10 @@ x	set up Entity Framework - 40 mins
 x	copy landmarks-data from html-file to DB seed-file - 20 mins
 x	wepAPI controller 'landmarktypes' (GET in: - , out: list_of_types) - 15 mins
 x	webAPI controller 'landmarks' (GET in:geolong/geolat, out:list_of_objects) - 15 mins
--	rewrite html front-end
-	-	remove DB content
-	-	add AJAX api-calls
-	-	rewrite JS-code to populate view from api-results
+x	rewrite html front-end - 3 hours
+	x	remove DB content
+	x	add AJAX api-calls
+	x	rewrite JS-code to populate view from api-results
 v1.99
 
 -	set up Identity Framework
