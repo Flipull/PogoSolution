@@ -9,8 +9,8 @@ namespace PogoWebCore
 {
     public class PogoContext: DbContext
     {
-        public DbSet<LandmarkType> LandmarkTypes;
-        public DbSet<Landmark> Landmarks;
+        public virtual DbSet<LandmarkType> LandmarkTypes { get; set; }
+        public virtual DbSet<Landmark> Landmarks { get; set; }
 
         public PogoContext(DbContextOptions<PogoContext> options) : base(options)
         { }
@@ -21,7 +21,8 @@ namespace PogoWebCore
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<LandmarkType>();
+            modelBuilder.Entity<LandmarkType>().ToTable("LandmarkTypes");
+            modelBuilder.Entity<Landmark>().ToTable("Landmarks");
             modelBuilder.Entity<Landmark>()
                 .HasOne<LandmarkType>()
                 .WithMany().HasForeignKey(l => l.TypeId)
