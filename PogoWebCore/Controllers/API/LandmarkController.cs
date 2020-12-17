@@ -24,7 +24,7 @@ namespace PogoWebCore.Controllers.API
         // GET: api/LandmarkTypes
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Landmark>>> 
-            GetLandmarks([FromQuery]double? lon, [FromQuery] double? lat)
+            GetLandmarks([FromQuery]double? longitude, [FromQuery] double? lattitude)
         {
             return await _context.Landmarks.ToListAsync();
         }
