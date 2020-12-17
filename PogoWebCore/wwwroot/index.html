@@ -1,0 +1,447 @@
+
+<html>
+    <head runat="server">
+        <title>Pokémon GO Reeshof</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href="Styles/StyleSheet.css" rel="stylesheet" />
+        <link rel="stylesheet" href="Leaflet/leaflet.css" />
+        <link rel="stylesheet" href="src/leaflet-search.css" />
+        <link rel="stylesheet" href="src/leaflet-search.mobile.css" />
+        <link rel="stylesheet" href="Styles/MapStyle.css" />
+        <link rel="stylesheet" href="Styles/MapMobile.css" />  
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+    </head>
+    <body>
+            <main id="map">
+                <script src="Javascript/jquery-3.4.1.min.js"></script>
+                <script src="Leaflet/leaflet.js"></script>
+                <script src="src/leaflet-search.js"></script>
+                <script src="src/L.Control.Locate.js"></script>
+                <script>
+                    // Markers van type GYM
+                    var gyms = 
+                    [
+                        {"loc": [51.571050, 4.9996530], "title": "Stone benches playground" },
+                        {"loc": [51.593227, 4.9977130], "title": "Tilburg Landmerk" },  
+                        {"loc":[51.584331, 4.9818930], "title":"Dragon Eating Fish"},	
+                        {"loc":[51.580279, 4.9841980], "title":"Make it Count"},        
+                        {"loc":[51.572661, 4.9963690], "title":"Zwaaiend Mannetje"},
+                        {"loc":[51.573772, 4.9935920], "title":"Station Tilburg Reeshof"},     
+                        {"loc":[51.577547, 5.0043730], "title":"Social Sofa Heyhoef"},
+                        {"loc":[51.577840, 5.0062110], "title":"Feestornament Bij Winkelcentrum Heijhoef"}, 
+                        {"loc":[51.586196, 5.0153910], "title":"Caterpillar Climbing Structure"},           
+                        {"loc":[51.589790 , 4.9970720], "title":"Midwolde playground"},
+                        {"loc":[51.585734,4.997185], "title":"Peerkes Hoeve"},       
+                        {"loc":[51.583528, 5.0213070], "title":"Hoops for 2"},
+                        {"loc":[51.582110, 5.0193410], "title":"Social Sofa Buurmalsenplein"},
+                        {"loc":[51.572761, 5.0018550], "title":"Voetbalveld SV Reeshof"},
+                        {"loc":[51.570308, 5.0108370], "title":"Art stones suburb Witbrand Oost"},
+                        {"loc":[51.581468, 4.9792330], "title":"Round And Round"},
+                        {"loc":[51.584361, 4.9758310], "title":"Skatepark Soerendonklaan"},
+                        {"loc":[51.592115, 4.9980110], "title":"Mini soccerfield Middelharnisstraat"},
+                        {"loc":[51.587993, 5.0065930], "title":"Basketbal Bijsterveldenlaan"},
+                        {"loc":[51.586467, 5.0145080], "title":"Sitting Room"},
+                        {"loc":[51.581321, 5.0141520], "title":"St. Antonius van Paduakerk - Emmausparochie Tilburg"},
+                        {"loc":[51.580924, 5.0234800], "title":"walking around"},
+                        {"loc":[51.577503, 4.9870570], "title":"Plekgedicht fietserbrug"},
+                        {"loc":[51.591195, 4.979477], "title":"Playground Reeswoude"},
+                        {"loc":[51.595889, 4.9919920], "title":"Sluis Wilhelminakanaal"},
+                        {"loc":[51.587898, 5.0151820], "title":"historische kanaalbrug reeshof"}
+                    ];
+                    // Markers van type EX GYM
+                    var exgyms = 
+                    [
+                        {"loc":[51.589204 , 5.0006230], "title":"Loosduinenhof playground"},
+                        {"loc":[51.585992, 5.0055820], "title":"Up Mushroom"},
+                        {"loc":[51.584470 , 5.0003390], "title":"Playground Hoevelaken"},
+                        {"loc":[51.582931, 4.9791770], "title":"Social Sofa Schipluidenlaan"},
+                        {"loc":[51.583696, 4.9757150], "title":"JOP Dalemdreef"},	
+                        {"loc":[51.594621, 4.9880680], "title":"Speeltuin Munnikeburenstraat"},
+                        {"loc":[51.573764 , 4.9769480], "title":"Speeltuin Varsseveldstraat"},
+                        {"loc":[51.582295, 4.9900770], "title":"Reeshofpark West"},     
+                        {"loc":[51.578598, 5.0016720], "title":"Reeshofpark Oost Ingang"},
+                        {"loc":[51.575617, 5.0050460], "title":"Speeltuin Kortgenestraat"},
+                        {"loc":[51.580835,5.0191470], "title":"Play Area Fountain"},
+                        {"loc":[51.591950, 4.9887510], "title":"Artpiece Around The World"},
+                        {"loc":[ 51.593154, 4.983733], "title":"Speeltuin Metslawierstraat"},
+                        {"loc":[51.573016, 5.020632], "title":"Reeshofbos Speelbos"},
+                        {"loc":[51.569810, 5.0019200], "title":"Climbstone"},
+                        {"loc":[51.588607, 4.9842530], "title":"Fietsersbrug Mariaradevonder"},
+                        {"loc":[51.587265, 4.9829800], "title":"Rode Olifant Wip Op Speelplein"},
+                        {"loc":[51.578778, 5.0217580], "title":"Wall Mural"},
+                        {"loc":[51.575765, 5.0097520], "title":"Wooden Owl"},
+                        {"loc":[51.577442 , 4.9863010], "title":"Torenvalk Dongevallei"},
+                        {"loc":[51.576573, 4.9808390], "title":"Rectangular Panoramic Window Art"},
+                        {"loc":[51.577924 , 4.9746570], "title":"Gudok"},
+                        {"loc":[51.579977, 4.9955870], "title":"Geef Om Een Ander"},
+                        {"loc":[51.585421, 5.0032240], "title":"Social Sofa Winnen doen we samen"},
+                        {"loc":[51.579651, 5.0138340], "title":"Artpiece into the Sky"},
+                        {"loc":[51.576716, 4.9943460], "title":"Sleepy Social Sofa"},
+                        {"loc":[51.577863, 4.9948970], "title":"Social Sofa Beatrix College"},
+                        {"loc":[51.571268, 4.9758530], "title":"Referee"},
+                        {"loc":[51.584276, 4.9879180], "title":"Portrait Mural"},  
+                        {"loc":[51.571213 , 4.9831200], "title":"Speeltuin Zelhemstraat"},
+                        {"loc":[51.594066 , 4.9808980], "title":"De Dongevallei"},
+                        {"loc":[51.579218, 4.9987460], "title":"Charles Rey de Carle"},
+                        {"loc":[51.5692899, 4.979325], "title":"Minispeeltuin In Vlagtwedde"},
+                        {"loc":[51.567764, 5.01285], "title":"Social Sofa Abcoudestraat"},
+                        {"loc":[51.593249, 4.991179], "title":"Blue Puppet"},
+                        {"loc":[51.601769, 4.9769360], "title":"Burgemeester Letscherbrug"},
+                        {"loc":[51.583277, 4.97809], "title":"Up and Down Structure"}
+                    ];
+                    var stops =
+                    [
+                        {"loc":[51.567833, 5.0048], "title":"De Gaas"},
+                        {"loc":[51.568917, 5.005279], "title":"Mozaïc Bankje"},         
+                        {"loc":[51.564747, 4.99312], "title":"Fietskaart Oude Rielse Baan"},
+                        {"loc":[51.572658, 4.996742], "title":"Men In Glass"},
+                        {"loc":[51.573432, 4.993208], "title":"Vlinder Sociaal Sofa"},
+                        {"loc":[51.574131, 4.993452], "title":"Social Sofa Stadsplein"},
+                        {"loc":[51.574183, 4.993855], "title":"Social Sofa I Love Holland"},
+                        {"loc":[51.57343, 4.989553], "title":"Wandelbord F -Koolhoven Buiten"},
+                        {"loc":[51.571456, 4.986217], "title":"Wandelbord C Koolhoven Buiten"},
+                        {"loc":[51.573509, 4.984356], "title":"Zaltbommelse Lange Klimtuin"},
+                        {"loc":[51.572036, 4.981789], "title":"Speeltuin Koolhovenlaan"},
+                        {"loc":[51.574821, 4.980721], "title":"Living Colors Playground"},
+                        {"loc":[51.574874, 4.979432], "title":"Zonnewijzer"},
+                        {"loc":[51.571588, 4.975593], "title":"Fluit Stoeltje"},
+                        {"loc":[51.575761, 4.974634], "title":"Speeltuin Valkenswaard Vierhouten"},
+                        {"loc":[51.570232, 4.971408], "title":"Speeltuin Camping Vlagtwedde"},
+                        {"loc":[51.577358, 4.993688], "title":"Sporthal Dongewijk"},
+                        {"loc":[51.577732, 4.993749], "title":"Minaret"},
+                        {"loc":[51.576907, 4.997374], "title":"Playground Kralingenstraat"},
+                        {"loc":[51.575976, 5.000216], "title":"Playground Kalkwijk"},
+                        {"loc":[51.578254, 5.006089], "title":"Library Heyhoef"},
+                        {"loc":[51.577186, 5.009482], "title":"Honing-Etende Beer Standbeeldje"},
+                        {"loc":[51.574677, 5.008165], "title":"Eekhoorn"},
+                        {"loc":[51.573611, 5.009166], "title":"Specht poeky"},
+                        {"loc":[51.574288, 5.01216], "title":"Konijnen HOST"},
+                        {"loc":[51.573333, 5.013333], "title":"vos poeky"},
+                        {"loc":[51.574619, 5.014209], "title":"Reeshofbos Noord"},
+                        {"loc":[51.573054, 5.019399], "title":"Reeshofbos Oost"},
+                        {"loc":[51.580352, 5.005684], "title":"Kwiek Beweegroute (Heerenveldendreef)"},
+                        {"loc":[51.579053, 5.006022], "title":"Sportcentrum Tilburg Reeshof"},
+                        {"loc":[51.581089, 5.006653], "title":"Reeshof Huibeven"},
+                        {"loc":[51.584384, 5.009231], "title":"Zinloos"},
+                        {"loc":[51.585058, 5.011673], "title":"Speeltuintje Aan Biervlietplein"},
+                        {"loc":[51.587898, 5.015182], "title":"historische kanaalbrug reeshof"},
+                        {"loc":[51.581683, 5.0127], "title":"Playground Groenlo"},
+                        {"loc":[51.579199, 5.013053], "title":"Playground Huibeven"},
+                        {"loc":[51.583465, 5.014754], "title":"Batenburg Playground"},
+                        {"loc":[51.580726, 5.014914], "title":"Social Sofa Helen Parkhurst"},
+                        {"loc":[51.584711, 5.017424], "title":"Playground Besoijenstraat"},
+                        {"loc":[51.583251, 5.019935], "title":"Gedenksteen Plan Reeshof"},
+                        {"loc":[51.582746, 5.020071], "title":"Smile"},
+                        {"loc":[51.58246, 5.019324], "title":"Colorful Caterpillar Portal Buurmalsenplein"},
+                        {"loc":[51.58115, 5.01875], "title":"Children Times Ten Portal"},
+                        {"loc":[51.580401, 5.018033], "title":"Bloemenbankje"},
+                        {"loc":[51.578484, 5.018141], "title":"Playground Dwingelo"},
+                        {"loc":[51.577096, 5.0196], "title":"Totem Palen"},
+                        {"loc":[51.582899, 5.027767], "title":"R'hof Beam Bridge for Bikes"},
+                        {"loc":[51.597409, 4.984477], "title":"Playground Mijnden"},
+                        {"loc":[51.597162, 4.989306], "title":"Voldijkbrug"},
+                        {"loc":[51.595949, 4.989577], "title":"Pole Art Menaldumstraat"},
+                        {"loc":[51.593144, 4.991849], "title":"Pole Art Mosselhoekplein"},
+                        {"loc":[51.594756, 4.994742], "title":"Poles 2"},
+                        {"loc":[51.593877, 4.9978], "title":"Rivier Brug"},
+                        {"loc":[51.5916, 4.997831], "title":"Kids Delight"},
+                        {"loc":[51.585491, 4.977462], "title":"Playground Randwijkstraat"},
+                        {"loc":[51.587897, 4.978295], "title":"Playground Ruimelsingel"},
+                        {"loc":[51.585265, 4.978234], "title":"Heart Statue"},
+                        {"loc":[51.585315, 4.981014], "title":"Speeltuin Ridderkerkerf"},
+                        {"loc":[51.590315, 4.982053], "title":"Playground Ruitenveenstraat"},
+                        {"loc":[51.590962, 4.984301], "title":"Puzzle Play"},
+                        {"loc":[51.591608, 4.985709], "title":"Slinger De Slurf"},
+                        {"loc":[51.589005, 4.983711], "title":"Informatiebord Natuurgebied De Dongevallei"},
+                        {"loc":[51.589082, 4.984846], "title":"Diving duck plate"},
+                        {"loc":[51.588795, 4.98695], "title":"Little Playground Bijsterveldenlaan"},
+                        {"loc":[51.587298, 4.983963], "title":"Sprinkhanen"},
+                        {"loc":[51.586278, 4.983531], "title":"Informatiebord: Brandnetel"},
+                        {"loc":[51.585685, 4.984162], "title":"Informatiebord: Distel Bloem"},
+                        {"loc":[51.585178, 4.984354], "title":"Dongevallei Ridderkerksingel"},
+                        {"loc":[51.584398, 4.984302], "title":"Informatiebord: Watervogels"},
+                        {"loc":[51.583413, 4.980318], "title":"Playground Schipluidenlaan"},
+                        {"loc":[51.579218, 4.978156], "title":"Four Ribs"},
+                        {"loc":[51.583113, 4.984474], "title":"Stengels"},
+                        {"loc":[51.581426, 4.988705], "title":"Color Playground"},
+                        {"loc":[51.579936, 4.98401], "title":"Nature Graffiti"},
+                        {"loc":[51.579666, 4.984901], "title":"Vierteenschildpad"},
+                        {"loc":[51.579474, 4.98768], "title":"Fietsersbrug Sneekpad"},
+                        {"loc":[51.57892, 4.990202], "title":"Speeltuin Ossendrechtstraat"},
+                        {"loc":[51.576032, 4.982187], "title":"Playground Reeshof Krajicek"},
+                        {"loc":[51.576399, 4.982922], "title":"Hulky Face Mural"},
+                        {"loc":[51.576121, 4.985526], "title":"Verlanding"},
+                        {"loc":[51.590229, 4.993526], "title":"Speeltuin Margratenplein"},
+                        {"loc":[51.58909, 4.991449], "title":"Playground On Hill"},
+                        {"loc":[51.588015, 4.990358], "title":"Sun is Time"},
+                        {"loc":[51.586033, 4.989813], "title":"Playground Nieuwkoopplein"},
+                        {"loc":[51.585521, 4.997019], "title":"Peerkes Playground"},
+                        {"loc":[51.582983, 4.997967], "title":"Playground Heteren"},
+                        {"loc":[51.587917, 4.999111], "title":"Luijkgestel playground"},
+                        {"loc":[51.588255, 5.002622], "title":"Lothumse playground"}, 
+                        {"loc":[51.586473, 5.003745], "title":"Speeltuin Lochemstraat"},
+                        {"loc":[51.585681, 5.003661], "title":"The Jagged Wall"},
+                        {"loc":[51.583984, 5.002991], "title":"Playground Holten"},
+                        {"loc":[51.583404, 5.005304], "title":"Playground Hulsberg"},
+                        {"loc":[51.582373, 5.003197], "title":"Playground Hontenisse"},
+                        {"loc":[51.580175, 5.003827], "title":"Playground Horn"},
+                        {"loc":[51.582487, 4.991772], "title":"Move Your Body"},
+                        {"loc":[51.582084, 4.995348], "title":"Skate Park"},
+                        {"loc":[51.582203, 4.996103], "title":"Reeshofpark Noord ingang"},
+                        {"loc":[51.581264, 4.99622], "title":"Stop De Bende art"},
+                        {"loc":[51.580224, 4.998361], "title":"The Big Circle"},
+                        {"loc":[51.579176, 4.999629], "title":"Cruyff Court"},
+                        {"loc":[51.579018, 5.000336], "title":"Basketbalveld"},
+                        {"loc":[51.579012, 4.997166], "title":"Reeshofpark Zuid"},
+                        {"loc":[51.579021, 4.996142], "title":"Speeltuin Reeshofpark"},
+                        {"loc":[51.579201, 4.995208], "title":"Fietsroutenetwerk midden Brabant Knooppunt 56"},
+                        {"loc":[51.571721, 5.00148], "title":"Playground koewachtpad"},
+                        {"loc":[51.571887, 4.99706], "title":"Playground Wijboschstraat"},
+                        {"loc":[51.575216, 4.992529], "title":"Speeltuin Obdamstraat"},
+                        {"loc":[51.575681, 4.989648], "title":"Speeltuin Ockenburg"},
+                        {"loc":[51.577061, 4.977906], "title":"Wip en hobbelpaard"},
+                        {"loc":[51.579949, 4.976001], "title":"Betonnen tafeltennistafel"},
+                        {"loc":[51.583273, 4.982675], "title":"Wooden Playground"},
+                        {"loc":[51.593374, 4.987205], "title":"Playground Mingersbergstraat"},
+                        {"loc":[51.595096, 4.985766], "title":"Speeltuin Midslandstraat"},
+                        {"loc":[51.579021, 4.996142], "title":"Three Tol Playground"},
+                        {"loc":[51.596153, 4.986827], "title":"Hangaround"},
+                        {"loc":[51.579021, 4.996142], "title":"Speeltuin Reeshofpark"},
+                        {"loc":[51.571434, 4.999605], "title":"Kabelbaan Witbrand"},
+                        {"loc":[51.570639, 4.970402], "title":"Minibieb Vlodropstraat"},
+                        {"loc":[51.573785, 4.971201], "title":"Plattegrond Reeshof"},
+                        {"loc":[51.577061, 4.977906], "title":"Wip en hobbelpaard"},
+                        {"loc":[51.582214, 4.976821], "title":"Goals!!!!"},
+                        {"loc":[51.582544, 4.982361], "title":"Kids playground"},
+                        {"loc":[51.592044, 4.982904], "title":"Gele wipkip."},
+                        {"loc":[51.593058, 4.981566], "title":"Playground Marlestraat"},
+                        {"loc":[51.594917, 4.983353], "title":"3 red Puppets"},
+                        {"loc":[51.583715, 4.999136], "title":"Heerevelden"},            
+                        {"loc":[51.568954, 4.986304], "title":"Wandelbord C Koolhoven Buiten"},
+                        {"loc":[51.570478, 4.996646], "title":"Jeu de boules Witbrant West"},
+                        {"loc":[51.570585, 5.002324], "title":"Stone Pingpong Table Witbrant West"},
+                        {"loc":[51.569203, 5.006945], "title":"Natural Soccer Playground"},
+                        {"loc":[51.56982, 5.008732], "title":"Kabelbaan Witbrant Oost"},
+                        {"loc":[51.569142, 5.010785], "title":"Jeux de Boule Witbrant Oost"},
+                        {"loc":[51.568627, 5.011452], "title":"Playground Witbrant Oost"},
+                        {"loc":[51.568587, 5.013424], "title":"Stone PingPong Table Witbrant Oost"},
+                        {"loc":[51.568734, 5.013771], "title":"Wooden Play Structure"},
+                        {"loc":[51.574781, 4.997187], "title":"Playground Knegselstraat"},
+                        {"loc":[51.574323, 5.000119], "title":"Playground Kalkwijkstraat"},
+                        {"loc":[51.577824, 4.992885], "title":"Playground Overlangelstraat"},
+                        {"loc":[51.576553, 4.977568], "title":"Fietskaart Tilburg"},
+                        {"loc":[51.579008, 4.979299], "title":"Klimtoestel"},
+                        {"loc":[51.579246, 4.975937], "title":"De 3 rekstokjes"},
+                        {"loc":[51.583317, 4.981119], "title":"Lets play football"},
+                        {"loc":[51.585925, 4.978531], "title":"Schommelding Ruimelplein"},
+                        {"loc":[51.59522, 4.991473], "title":"Spying Man"},
+                        {"loc":[51.589413, 4.995002], "title":"Playground Moerdijkerf"},
+                        {"loc":[51.588161, 4.99441], "title":"Voetbalveldje Maalbergenpad"},
+                        {"loc":[51.584968, 4.996101], "title":"Voetbalveldje Nootdorpstraat"},
+                        {"loc":[51.588275, 5.005894], "title":"Voetbalveld Bijsterveldenlaan"},
+                        {"loc":[51.586226, 5.013568], "title":"Playground Besoijenpad"},
+                        {"loc":[51.585743, 5.014984], "title":"Voetbalveld Besoijenpad"},
+                        {"loc":[51.578273, 5.012451], "title":"Voetbalveld Huibenvenpark"},
+                        {"loc":[51.580472, 5.024175], "title":"insectenhotel"},
+                        {"loc":[51.580417, 5.006565], "title":"Social Sofa Hipo"},
+                        {"loc":[51.576075, 4.998967], "title":"De roestuil"},
+                        {"loc":[51.575354, 4.978168], "title":"Playground Voerendaalstraat"},
+                        {"loc":[51.573928, 5.002984], "title":"Playground Krommeniestraat"},
+                        {"loc":[51.574394, 5.006322], "title":"Reeshofbos map"},
+                        {"loc":[51.582393, 5.007127], "title":"Kwiek Beweegroute (Gendringenlaan)"},
+                        {"loc":[51.57946, 5.007133], "title":"Zwembad Reeshof"},
+                        {"loc":[51.592856, 5.001417], "title":"CA bridge."},
+                        {"loc":[51.573861, 4.986245], "title":"Zoek de Beer!"},
+                        {"loc":[51.573048, 4.97473], "title":"Speelhoek Koolhovenlaan"},
+                        {"loc":[51.58129, 4.979945], "title":"Klimmen en klauteren"},
+                        {"loc":[51.583455, 4.973944], "title":"Glijbaan in het park"},
+                        {"loc":[51.591513, 4.978253], "title":"Playground Ravensteinerf"},
+                        {"loc":[51.599911, 4.979389], "title":"Rustplaats Wilhelminakanaal"},
+                        {"loc":[51.583753, 4.991934], "title":"Rode Maanwippert"},
+                        {"loc":[51.578288, 4.990242], "title":"Voetbalveld Ossendrecht"},
+                        {"loc":[51.595931, 4.990559], "title":"Mini soccerfield menaldumstraat"},
+                        {"loc":[51.595931, 4.990559], "title":"Mini soccerfield menaldumstraat"},
+                        {"loc":[51.58389, 5.016571], "title":"Wipstoel Pacman"},
+                    ];
+
+                    // Map opzetten
+	                var map = new L.Map('map', 
+                    {
+                        zoom: 15, 
+                        center: new L.latLng(gyms[0].loc),
+                        zoomControl:false, 
+                        attributionControl: false
+                    });
+        
+                    // Map baselayer
+                    map.addLayer(new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'), { detectRetina: true });
+
+                    // Layer voor gezochte markers
+	                var markersLayer = new L.LayerGroup();	
+
+    
+                    // Layer markers type GYM
+                    var gymLayer = new L.LayerGroup();
+                    map.addLayer(gymLayer);
+    
+                    // Layer markers type EX GYM
+                    var exgymLayer = new L.LayerGroup();
+                    map.addLayer(exgymLayer);
+        
+                        // Layer markers type EX GYM
+                    var stopLayer = new L.LayerGroup();
+                    map.addLayer(stopLayer);
+
+	                var controlSearch = new L.Control.Search({
+		                position:'topleft',		
+		                layer: markersLayer,
+		                initial: false,
+		                zoom: 17,
+		                marker: false
+	                });
+
+                    var gym = L.icon(
+                    {
+                        iconUrl: 'images/gym.png',
+                        iconSize:     [20, 20],  
+                        iconAnchor:   [10, 10],   
+                        popupAnchor:  [0,0] 
+                    });
+        
+                    var gymEX = L.icon(
+                    {
+                        iconUrl: 'images/gymex.png',
+                        iconSize:     [20, 20],  
+                        iconAnchor:   [10, 10],   
+                        popupAnchor:  [0,0] 
+                    });
+        
+                    var stop = L.icon(
+                    {
+                        iconUrl: 'images/stop.png',
+                        iconSize:     [20, 20],  
+                        iconAnchor:   [10, 10],   
+                        popupAnchor:  [0,0] 
+                    });
+
+	                map.addControl( controlSearch );
+                    controlSearch.on('search:locationfound', function(event) 
+                    {
+                         event.layer.openPopup();
+                    });
+        
+        
+                    for(i in gyms) 
+                    {
+                        var title = gyms[i].title,	//value searched
+                            loc = gyms[i].loc,		//position found
+                            marker = new L.Marker(new L.latLng(loc), {icon: gym,title: title} );//se property searched
+                        marker.bindPopup(title + "<br> <a href='https://www.google.com/maps/search/?api=1&query=" + gyms[i].loc + "' target='_blank'>Navigate</a>");
+                        gymLayer.addLayer(marker);
+                        markersLayer.addLayer(marker);
+        
+                    } 
+                    for(i in exgyms) 
+                    {
+                        var title = exgyms[i].title,	//value searched
+                            loc = exgyms[i].loc,		//position found
+                            marker = new L.Marker(new L.latLng(loc), {icon: gymEX,title: title} );//se property searched
+                        marker.bindPopup(title + "<br> <a href='https://www.google.com/maps/search/?api=1&query=" + exgyms[i].loc + "' target='_blank'>Navigate</a>");		
+                        exgymLayer.addLayer(marker);
+                        markersLayer.addLayer(marker);
+                    }
+                    for(i in stops) 
+                    {
+                        var title = stops[i].title,	//value searched
+                            loc = stops[i].loc,		//position found
+                            marker = new L.Marker(new L.latLng(loc), {icon: stop,title: title} );//se property searched
+                        marker.bindPopup(title + "<br> <a href='https://www.google.com/maps/search/?api=1&query=" + stops[i].loc + "' target='_blank'>Navigate</a>");		
+                        stopLayer.addLayer(marker);
+                        markersLayer.addLayer(marker);
+                    }
+    
+                    // Waypoints plaatsen in zoekfunctie op basis van actieve layers
+                    $(".leaflet-right").click(function()
+                    {     
+        
+                        controlSearch.autoCollapse = true;
+                        var gymActive = map.hasLayer(gymLayer);
+                        var exgymActive = map.hasLayer(exgymLayer);
+                        var stopActive = map.hasLayer(stopLayer);
+        
+                        markersLayer.clearLayers();
+                        gymLayer.clearLayers();
+                        exgymLayer.clearLayers();
+                        stopLayer.clearLayers();
+        
+                        if(gymActive == true)
+                        {
+            
+                            for(i in gyms) 
+                            {
+                                var title = gyms[i].title,	//value searched
+                                    loc = gyms[i].loc,		//position found
+                                    marker = new L.Marker(new L.latLng(loc), {icon: gym,title: title} );//se property searched
+                                marker.bindPopup(title + "<br> <a href='https://www.google.com/maps/search/?api=1&query=" + gyms[i].loc + "' target='_blank'>Navigate</a>");
+                                gymLayer.addLayer(marker);
+                                markersLayer.addLayer(marker);
+                            }  
+                        }
+                        if(exgymActive == true)
+                        {
+                            for(i in exgyms) 
+                            {
+                                var title = exgyms[i].title,	//value searched
+                                    loc = exgyms[i].loc,		//position found
+                                    marker = new L.Marker(new L.latLng(loc), {icon: gymEX,title: title} );//se property searched
+                                marker.bindPopup(title + "<br> <a href='https://www.google.com/maps/search/?api=1&query=" + exgyms[i].loc + "' target='_blank'>Navigate</a>");
+                                exgymLayer.addLayer(marker);
+                                markersLayer.addLayer(marker);
+                            }  
+                        }
+                        if(stopActive == true)
+                        {
+                            for(i in stops) 
+                            {
+                                var title = stops[i].title,	//value searched
+                                    loc = stops[i].loc,		//position found
+                                    marker = new L.Marker(new L.latLng(loc), {icon: stop,title: title} );//se property searched
+                                marker.bindPopup(title + "<br> <a href='https://www.google.com/maps/search/?api=1&query=" + stops[i].loc + "' target='_blank'>Navigate</a>");
+                                stopLayer.addLayer(marker);
+                                markersLayer.addLayer(marker);
+                            }  
+                        }
+        
+
+                    });
+    
+                    var overlays = 
+                        {
+                            "<img src='images/gym.png' height='20px'>&nbsp;Gyms": gymLayer,
+                            "<img src='images/gymex.png' height='20px'>&nbsp;EX gyms": exgymLayer,
+                            "<img src='images/stop.png' height='20px'>&nbsp;Pokéstops": stopLayer
+                        };
+
+                    var layercontrol = L.control.layers(null,overlays,{collapsed:false},{position:'bottomleft'}).addTo(map);
+
+                    lc = L.control.locate({
+                    strings:
+                    {
+                        title: "Show your position on map."
+                    }
+                    }).addTo(map);
+
+	                console.log("----------------------------------------");
+                    console.log("Statistics:")
+                    console.log("----------------------------------------");
+                    console.log("Amount of pokéstops: " + stops.length);
+                    console.log("Amount of gyms: " + gyms.length);
+                    console.log("Amount of EX gyms: " + exgyms.length);
+                    console.log("----------------------------------------");
+                </script>
+            </main>
+    </body>
+</html>

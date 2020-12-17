@@ -1,0 +1,24 @@
+﻿html
+{
+    height: 100%;
+}
+body {
+font-family:"Tahoma";
+    padding: 0px;
+    margin: 0px;
+}
+main 
+{
+    height: 100%;
+    width:100%;
+}
+form
+{
+margin: 0px;
+}
+form::before
+{
+    content:"Filter";
+    font-size:1.2em;
+    font-weight:600;
+}
