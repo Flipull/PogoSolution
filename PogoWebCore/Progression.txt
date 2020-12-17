@@ -2,9 +2,9 @@
 v1.0
 x	DO LandmarkTypes { id, name('Pokestop', 'Gym', 'Exgym') } - 5 mins
 x	DO Landmarks {id, foreign_key LandmarkType, name, geolong/geolat} - 5 mins
+x	set up Entity Framework
 -	wepAPI controller 'landmarktypes' (GET in: - , out: list_of_types)
 -	webAPI controller 'landmarks' (GET in:geolong/geolat, out:list_of_objects)
--	set up Entity Framework
 -	copy landmarks-data from html-file to DB seed-file
 -	rewrite html
 	-	remove DB content
