@@ -338,3 +338,10 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/PogoWebCore/Migrations/PogoContextModelSnapshot.cs
+/PogoWebCore/Migrations/20201217124840_v1.2.Designer.cs
+/PogoWebCore/Migrations/20201217124840_v1.2.cs
+/PogoWebCore/Migrations/20201217124026_v1.1.Designer.cs
+/PogoWebCore/Migrations/20201217124026_v1.1.cs
+/PogoWebCore/Migrations/20201217123913_v1.Designer.cs
+/PogoWebCore/Migrations/20201217123913_v1.cs
