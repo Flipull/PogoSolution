@@ -13,8 +13,14 @@ x	rewrite html front-end - 3 hours
 v1.99
 
 -	set up Identity Framework
-	-	add 2 roles and 2 users (1 admin, 1 subordinate editorial user)
--	scaffold editing environment for the user (CRUD for all datatypes)
+	-	add Role Administrator
+	-	add Role Editorial
+	-	add Admin User (Administrator role + Editorial role)
+	-	add Editorial User (Editorial Role)
+-	scaffold editing environment for the user 
+	- scaffold CRUD for Landmarktypes (Editorial role)
+	- scaffold CRUD for Landmarks (Editorial role)
+	- scaffold CRUD for Useraccounts (Admin role)
 
 
 v2.0
