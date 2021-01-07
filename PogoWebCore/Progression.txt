@@ -1,5 +1,5 @@
 ﻿x	cloned old product to continue functionality - 30 mins
-v1.0
+= v1.0
 x	DO LandmarkTypes { id, name('Pokestop', 'Gym', 'Exgym') } - 5 mins
 x	DO Landmarks {id, foreign_key LandmarkType, name, geolong/geolat} - 5 mins
 x	set up Entity Framework - 40 mins
@@ -10,17 +10,32 @@ x	rewrite html front-end - 3 hours
 	x	remove DB content
 	x	add AJAX api-calls
 	x	rewrite JS-code to populate view from api-results
-v1.99
+= v1.99
 
--	set up Identity Framework
+-	set up Identity Framework - 1..5 hours
 	-	add Role Administrator
 	-	add Role Editorial
 	-	add Admin User (Administrator role + Editorial role)
 	-	add Editorial User (Editorial Role)
+		[+- 2 hours; learned to couple custom user and role-objects,
+		 +- 2 hours; created (non-runtime) migration-seeded users]
 -	scaffold editing environment for the user 
 	- scaffold CRUD for Landmarktypes (Editorial role)
 	- scaffold CRUD for Landmarks (Editorial role)
 	- scaffold CRUD for Useraccounts (Admin role)
 
 
-v2.0
+= v2.0
+?	visual aspects; home-page > index.html, unicode support, login button top-right
+
+?	client symbol caching (timestamp based on last update)
+
+?	Grouped-view for zoomlevel > x; to accomodate millions of landmarks, in a view 
+		(annotated with numeric values)
+?	TODO implement "limited" landmarks API - decisions: 
+		use grouped views? return 1/many different grouped views when 
+				reached some zoomed out level?
+		return visible region of the map only (2 geo-coords)?
+		return visible region of the map in an (HD/4K) area of the map based on map center (geo-coords)?
+
+= v3.0
