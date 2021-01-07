@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using PogoWebCore.Models;
 using System;
 using System.Collections.Generic;
@@ -7,7 +9,18 @@ using System.Threading.Tasks;
 
 namespace PogoWebCore
 {
-    public class PogoContext: DbContext
+    public class PogoRole: IdentityRole<int>
+    {
+        
+    }
+    public class PogoUser: IdentityUser<int>//made keys as int, for easier seeding
+    {   
+    }
+    public class PogoUserRole: IdentityUserRole<int>
+    {
+
+    }
+    public class PogoContext: IdentityDbContext<PogoUser, PogoRole, int>
     {
         public virtual DbSet<LandmarkType> LandmarkTypes { get; set; }
         public virtual DbSet<Landmark> Landmarks { get; set; }
@@ -21,6 +34,69 @@ namespace PogoWebCore
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<PogoRole>().HasData(
+                new PogoRole
+                {
+                    Id = 1,
+                    Name = "Administrator",
+                    NormalizedName = "ADMINISTRATOR"
+                },
+                new PogoRole
+                {
+                    Id = 2,
+                    Name = "Editorial",
+                    NormalizedName = "EDITORIAL"
+                }
+            );
+            
+            var hasher = new PasswordHasher<PogoUser>();
+            modelBuilder.Entity<PogoUser>().HasData(
+                new PogoUser
+                {
+                    Id = 1,
+                    UserName = "eenemail@ergens.nl",//necessary for login-process?!
+                    NormalizedUserName = "EENEMAIL@ERGENS.NL",//necessary for login-process?!
+                    Email = "eenemail@ergens.nl",
+                    NormalizedEmail = "EENEMAIL@ERGENS.NL",
+                    PasswordHash = hasher.HashPassword(null, "temporarypass"),
+                    LockoutEnabled = false,
+                    EmailConfirmed = true,
+                    SecurityStamp = Guid.NewGuid().ToString()
+                }
+                /*
+                new PogoUser
+                {
+                    Id = 2,
+                    UserName = "Editor",
+                    NormalizedUserName = "EDITOR",
+                    Email = null,
+                    NormalizedEmail = null,
+                    PasswordHash = hasher.HashPassword(null, "temporarypass"),
+                    EmailConfirmed = true
+                }
+                */
+            );
+
+
+            modelBuilder.Entity<PogoUserRole>().HasData(
+                new List<PogoUserRole>
+                {
+                    new PogoUserRole
+                    {
+                        RoleId = 1, // for admin username
+                        UserId = 1  // for admin role
+                    },
+                    /*
+                    new PogoUserRole
+                    {
+                        RoleId = 2, // for staff username
+                        UserId = 2  // for staff role
+                    }
+                    */
+                }
+            );
+
             modelBuilder.Entity<LandmarkType>().ToTable("LandmarkTypes");
             modelBuilder.Entity<Landmark>().ToTable("Landmarks");
             modelBuilder.Entity<Landmark>()
@@ -270,7 +346,11 @@ new Landmark { Id = 231, TypeId = 3, Name = "Voetbalveld Ossendrecht", Longitude
 new Landmark { Id = 232, TypeId = 3, Name = "Mini soccerfield menaldumstraat", Longitude = 51.595931, Lattitude = 4.990559 },
 new Landmark { Id = 233, TypeId = 3, Name = "Mini soccerfield menaldumstraat", Longitude = 51.595931, Lattitude = 4.990559 },
 new Landmark { Id = 234, TypeId = 3, Name = "Wipstoel Pacman", Longitude = 51.58389, Lattitude = 5.016571 }
-               ); 
+               );
+
+            //Identity-seeding
+
+
 
             base.OnModelCreating(modelBuilder);
         }

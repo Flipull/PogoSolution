@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,10 +26,12 @@ namespace PogoWebCore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDbContext<PogoContext>(
-                (opts) => opts.UseSqlServer(
+            services.AddDbContext<PogoContext>(options =>
+                options.UseSqlServer(
                     Configuration.GetConnectionString("PogoDatabase")),
-                ServiceLifetime.Scoped);
+                    ServiceLifetime.Scoped);
+
+            services.AddMvc();//required for IdentityFramework
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,8 +50,14 @@ namespace PogoWebCore
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
-
+            
+            app.UseAuthentication();
             app.UseAuthorization();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapRazorPages();
+            });
 
             app.UseEndpoints(endpoints =>
             {

@@ -349,3 +349,5 @@ healthchecksdb
 /PogoWebCore/Migrations/20201217135617_v2.cs
 /PogoWebCore/Migrations/20201217141809_v2.1.Designer.cs
 /PogoWebCore/Migrations/20201217141809_v2.1.cs
+/PogoWebCore/Migrations/20210107132710_v2.Designer.cs
+/PogoWebCore/Migrations/20210107132710_v2.cs

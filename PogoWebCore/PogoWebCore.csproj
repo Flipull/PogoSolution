@@ -16,12 +16,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Migrations\20201217141809_v2.1.cs" />
-    <Compile Include="Migrations\20201217141809_v2.1.Designer.cs" />
+    <Compile Include="Migrations\20210107132710_v2.cs" />
+    <Compile Include="Migrations\20210107132710_v2.Designer.cs" />
     <Compile Include="Migrations\PogoContextModelSnapshot.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.1">
       <PrivateAssets>all</PrivateAssets>

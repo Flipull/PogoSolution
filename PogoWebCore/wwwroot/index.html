@@ -23,6 +23,8 @@
 <script>
     var map;
     var mapLegenda = [];
+    BuildMap();
+    
     function BuildMap() {
         // Map opzetten
 	    map = new L.Map('map', 
@@ -34,7 +36,7 @@
             attributionControl: false
         });
         // Map baselayer
-        map.addLayer(new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'), { detectRetina: true });
+        map.addLayer(new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'), { detectRetina: true });
 
 	    var controlSearch = new L.Control.Search({
             position: 'topleft',
