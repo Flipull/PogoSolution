@@ -71,6 +71,11 @@ namespace PogoWebCore.Controllers
         {
             var error_list = new List<string>();
             ViewBag.Errors = error_list;
+            if (email ==  null)
+            {
+                error_list.Add("Empty Email");
+                return View();
+            }
 
             string corrected_email;
             try
