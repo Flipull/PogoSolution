@@ -10,7 +10,7 @@ using PogoWebCore.Models;
 
 namespace PogoWebCore.Controllers
 {
-    [Authorize(Roles = "Administrator,Editorial")]
+    [Authorize(Roles = "Editorial")]
     public class LandmarksController : Controller
     {
         private readonly PogoContext _context;
