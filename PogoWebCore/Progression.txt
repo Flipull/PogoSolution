@@ -12,17 +12,17 @@ x	rewrite html front-end - 3 hours
 	x	rewrite JS-code to populate view from api-results
 = v1.99
 
--	set up Identity Framework - 1..5 hours
-	-	add Role Administrator
-	-	add Role Editorial
-	-	add Admin User (Administrator role + Editorial role)
-	-	add Editorial User (Editorial Role)
+x	set up Identity Framework - 1..5 hours
+	x	add Role Administrator
+	x	add Role Editorial
+	x	add Admin User (Administrator role + Editorial role)
+	x	add Editorial User (Editorial Role)
 		[+- 2 hours; learned to couple custom user and role-objects,
 		 +- 2 hours; created (non-runtime) migration-seeded users]
--	scaffold editing environment for the user - 3..4 hours
-	- scaffold CRUD for Landmarktypes (Editorial role)
-	- scaffold CRUD for Landmarks (Editorial role)
-	- scaffold CRUD for Useraccounts (Admin role)
+x	scaffold editing environment for the user - 3..4 hours
+	x scaffold CRUD for Landmarktypes (Editorial role)
+	x scaffold CRUD for Landmarks (Editorial role)
+	x scaffold CRUD for Useraccounts (Admin role)
 	[+- 2 hours; build and tested UserAccounts]
 	[+- 30 mins; usability/UI]
 	
