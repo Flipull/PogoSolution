@@ -53,6 +53,13 @@ namespace PogoWebCore
             
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>//hacky solution for (SAVELY!) disabling registering users
+            {
+                endpoints.MapGet("/Identity/Account/Register",
+                    async context => context.Response.StatusCode = 404);
+            });
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
