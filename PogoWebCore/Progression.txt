@@ -19,12 +19,13 @@ x	rewrite html front-end - 3 hours
 	-	add Editorial User (Editorial Role)
 		[+- 2 hours; learned to couple custom user and role-objects,
 		 +- 2 hours; created (non-runtime) migration-seeded users]
--	scaffold editing environment for the user - 25 mins
+-	scaffold editing environment for the user - 3..4 hours
 	- scaffold CRUD for Landmarktypes (Editorial role)
 	- scaffold CRUD for Landmarks (Editorial role)
 	- scaffold CRUD for Useraccounts (Admin role)
-
-
+	[+- 2 hours; build and tested UserAccounts]
+	[+- 30 mins; usability/UI]
+	
 = v2.0
 ?	visual aspects; home-page > index.html, unicode support, login button top-right
 
