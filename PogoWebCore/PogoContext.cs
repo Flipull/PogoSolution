@@ -75,42 +75,17 @@ namespace PogoWebCore
                     EmailConfirmed = true,
                     SecurityStamp = Guid.NewGuid().ToString()
                 }
-                /*
-                new PogoUser
-                {
-                    Id = 2,
-                    UserName = "Editor",
-                    NormalizedUserName = "EDITOR",
-                    Email = null,
-                    NormalizedEmail = null,
-                    PasswordHash = hasher.HashPassword(null, "temporarypass"),
-                    EmailConfirmed = true
-                }
-                */
             );
 
 
             modelBuilder.Entity<PogoUserRole>().HasData(
                 new List<PogoUserRole>
                 {
-                     // for admin: Administrator AND Editorial roles
                     new PogoUserRole
                     {
                         RoleId = 1,
                         UserId = 1  
-                    },
-                    new PogoUserRole
-                    {
-                        RoleId = 2,
-                        UserId = 1
-                    },
-                    /*
-                    new PogoUserRole
-                    {
-                        RoleId = 2, // for staff username
-                        UserId = 2  // for staff role
                     }
-                    */
                 }
             );
 
