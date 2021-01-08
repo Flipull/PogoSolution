@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 using PogoWebCore.Models;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,16 @@ using System.Threading.Tasks;
 
 namespace PogoWebCore
 {
+    public class PogoContextFactory : IDesignTimeDbContextFactory<PogoContext>
+    {
+        public PogoContext CreateDbContext(string[] args)
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<PogoContext>();
+            optionsBuilder.UseSqlServer(@"Server=MARK-GR31\\SQLEXPRESS;Database=PogoDatabase;Trusted_Connection=True;");
+            return new PogoContext(optionsBuilder.Options);
+        }
+    }
+
     public class PogoRole: IdentityRole<int>
     {
         
@@ -82,10 +93,16 @@ namespace PogoWebCore
             modelBuilder.Entity<PogoUserRole>().HasData(
                 new List<PogoUserRole>
                 {
+                     // for admin: Administrator AND Editorial roles
                     new PogoUserRole
                     {
-                        RoleId = 1, // for admin username
-                        UserId = 1  // for admin role
+                        RoleId = 1,
+                        UserId = 1  
+                    },
+                    new PogoUserRole
+                    {
+                        RoleId = 2,
+                        UserId = 1
                     },
                     /*
                     new PogoUserRole
