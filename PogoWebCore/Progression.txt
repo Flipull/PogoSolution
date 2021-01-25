@@ -1,5 +1,7 @@
 ﻿x	cloned old product to continue functionality - 30 mins
 = v1.0
+----------------------------------------------------------------------------
+
 x	DO LandmarkTypes { id, name('Pokestop', 'Gym', 'Exgym') } - 5 mins
 x	DO Landmarks {id, foreign_key LandmarkType, name, geolong/geolat} - 5 mins
 x	set up Entity Framework - 40 mins
@@ -11,6 +13,7 @@ x	rewrite html front-end - 3 hours
 	x	add AJAX api-calls
 	x	rewrite JS-code to populate view from api-results
 = v1.99
+----------------------------------------------------------------------------
 
 x	set up Identity Framework - 1..5 hours
 	x	add Role Administrator
@@ -26,7 +29,45 @@ x	scaffold editing environment for the user - 3..4 hours
 	[+- 2 hours; build and tested UserAccounts]
 	[+- 30 mins; usability/UI]
 	
+[Lessons Learned]
+	It's easy to generalize well-known facts in a concise roadmap - 
+			sacrificing precision and detail for the average person to understand.
+	It's hard to generalize unknown facts in a coincise roadmap -
+			as I am too average of a person to understand what is required.
+			
+	Custom UserRoles could have been avoided in favor of default implementation
+	Custom UsersController could have been avoided in favor of default implementation
+	Custom UsersController should use UserManager for 100% of actions (seperation of concerns)
+			instead of manually applying Identity-configuration to DB
+	Need a better understanding of model-validation
+			(instead of abusing ViewBag for validation-errors)
+
 = v2.0
+----------------------------------------------------------------------------
+
+
+
+[Skipped Refactoring Tasks of owner's product]
+	- JQuery, Leaflet linked multiple times
+	- css contains obsolete and useless stylings
+	- Leaflet is manually edited, to change UI library-textstrings
+	- wwwroot structure of libraries, and custom js and css-files
+[Skipped Tasks]
+	- Unittests for Controllers
+	- Unicode support
+	- Research/Testing cross-browser and cross-cultural posting of form-data
+[Refactoring of developer's code]
+	- refactor custom map-js as a library (dependent only on Leaflet library)
+	- refactor css-styling from html-file
+	- refactor Identity Data Objects into seperate files
+	- refactor UsersController to use the Identity UserManager
+
+
+= v2.0.1
+----------------------------------------------------------------------------
+
+
+
 ?	visual aspects; home-page > index.html, unicode support, login button top-right
 
 ?	client symbol caching (timestamp based on last update)
@@ -40,4 +81,3 @@ x	scaffold editing environment for the user - 3..4 hours
 		return visible region of the map in an (HD/4K) area of the map based on map center (geo-coords)?
 
 ?	symbol editing on the map itself, instead of seperated pages
-= v3.0
